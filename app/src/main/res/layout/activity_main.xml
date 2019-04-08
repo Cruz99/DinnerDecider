@@ -53,5 +53,15 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="80dp"
             app:layout_constraintBottom_toTopOf="@+id/decideButton"/>
+    <Button
+            android:text="Foods"
+            android:layout_width="138dp"
+            android:layout_height="55dp"
+            android:id="@+id/listFood" android:fontFamily="@font/muli_bold"
+            android:textColor="@color/colorAccent" android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/imageView"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.91" app:layout_constraintVertical_bias="0.506"/>
 
 </android.support.constraint.ConstraintLayout>
