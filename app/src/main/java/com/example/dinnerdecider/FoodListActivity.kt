@@ -1,12 +1,15 @@
 package com.example.dinnerdecider
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
-import android.widget.ListView
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_food_list.*
 import kotlinx.android.synthetic.main.ticket_new_food.view.*
 
@@ -24,8 +27,47 @@ class FoodListActivity : AppCompatActivity() {
         var foodListAdapter = MyFoodAdapter(foodListPerisit)
         foodListView.adapter = foodListAdapter
 
-
     }
+
+    // initialize menu items
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+
+        //working on search button
+        val sv = menu!!.findItem(R.id.app_bar_search).actionView as SearchView
+        val sm = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        sv.setSearchableInfo(sm.getSearchableInfo(componentName))
+        sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Toast.makeText(applicationContext, query, Toast.LENGTH_LONG).show()
+                //TODO: search database
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+
+            return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if (item != null) {
+            when (item.itemId) {
+                R.id.menuAddFood -> {
+                    //go to add page
+                    var intent = Intent(this, AddFoodItem::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 
     inner class MyFoodAdapter : BaseAdapter {
 
