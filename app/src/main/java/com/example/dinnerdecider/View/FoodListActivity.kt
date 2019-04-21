@@ -1,5 +1,6 @@
 package com.example.dinnerdecider.View
 
+import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,8 @@ import com.example.dinnerdecider.R
 import kotlinx.android.synthetic.main.activity_food_list.*
 import kotlinx.android.synthetic.main.ticket_new_food.view.*
 
+
+//Food list
 class FoodListActivity : AppCompatActivity() {
     var foodListPerisit = arrayListOf<FoodItem>()
 
@@ -41,7 +44,7 @@ class FoodListActivity : AppCompatActivity() {
         var dbManager= DbManager(this)
 
         println("val create projection")
-        val projection = arrayOf("ID", "FoodName", "Description")
+        val projection = arrayOf("ID", "FoodName", "Description","Price","Calories")
         //select everything
 
         var selectionArgs= arrayOf(title)
@@ -55,8 +58,10 @@ class FoodListActivity : AppCompatActivity() {
                 val ID=cursor.getInt(cursor.getColumnIndex("ID"))
                 val FoodName=cursor.getString(cursor.getColumnIndex("FoodName"))
                 val Description=cursor.getString(cursor.getColumnIndex("Description"))
+                val Price=cursor.getString(cursor.getColumnIndex("Price"))
+                val Calories=cursor.getString(cursor.getColumnIndex("Calories"))
 
-                foodListPerisit.add(FoodItem(ID, FoodName, Description))
+                foodListPerisit.add(FoodItem(ID, FoodName, Description,Price,Calories))
 
             }while(cursor.moveToNext())
         }
@@ -89,6 +94,7 @@ class FoodListActivity : AppCompatActivity() {
             return super.onCreateOptionsMenu(menu)
     }
 
+    //when item selection in menu
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         if (item != null) {
@@ -112,20 +118,32 @@ class FoodListActivity : AppCompatActivity() {
         var context: Context?=null
         //constructor accepting ArrayList and context
         constructor(context: Context, foodListPerisit: ArrayList<FoodItem>) : super() {
+            println("Running FoodListActivity - MyFoodAdapter")
             this.foodListPerisitAdapter = foodListPerisit
             this.context=context
         }
 
         //getting view - function where we update buttons - delete or edit
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            println("Running MyFoodAdapter - getView")
             var myView = layoutInflater.inflate(R.layout.ticket_new_food, null)
             var item = foodListPerisitAdapter[position]
 
 
+            println( "Running MyFoodAdapter - adding nodes")
             //adding nodes to view
+//            var foodNameTemp:String =item.foodName.toString()
             myView.foodItemName.text = item.foodName
-            myView.foodItemDescription.text = item.foodDescription.toString().substring(0,35) +"..."
+
+            //check the lengh of desc
+            var desTextTemp: String = item.foodDescription.toString()
+            if(desTextTemp.length>33) {
+                myView.foodItemDescription.text = item.foodDescription.toString().substring(0, 35) + "..."
+            }else{
+                myView.foodItemDescription.text = item.foodDescription+"..."
+            }
             //delete button
+            println( "Running MyFoodAdapter - delete button ")
             myView.foodItemButtonDelete.setOnClickListener(View.OnClickListener {
                 var dbManager = DbManager(this.context!!)
                 var selectionArgs= arrayOf(item.foodId.toString()) //selection argument
@@ -160,6 +178,9 @@ class FoodListActivity : AppCompatActivity() {
         intent.putExtra("ID", item.foodId)
         intent.putExtra("foodName", item.foodName)
         intent.putExtra("foodDesc", item.foodDescription)
+        println("Adding food extra items")
+        intent.putExtra("foodPrice", item.price)
+        intent.putExtra("foodCalories", item.calories)
         startActivity(intent)  //start activity
     }
 

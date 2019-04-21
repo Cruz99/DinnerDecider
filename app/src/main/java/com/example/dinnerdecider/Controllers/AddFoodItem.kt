@@ -14,6 +14,7 @@ import java.lang.Exception
 
 class AddFoodItem : AppCompatActivity() {
     val IMAGE_CAPTURE_CODE: Int = 1001
+    var bpm:Bitmap ?= null
     var id = 0 //to check update statement id value
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,9 @@ class AddFoodItem : AppCompatActivity() {
             if (id != 0) { //check
                 newFoodName.setText(bundle.getString("foodName").toString())
                 addFoodDescription.setText(bundle.getString("foodDesc").toString())
+                addFoodPrice.setText(bundle.getString("foodPrice").toString())
+                addFoodCalories.setText(bundle.getString("foodCalories").toString())
+
             }
         }catch (ex:Exception){
         }
@@ -42,16 +46,18 @@ class AddFoodItem : AppCompatActivity() {
 
     }
 
+    //method to take the result from previous activity )
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         println("Running  - OnActivityResult")
         println("Running - testing for null")
         if(requestCode!=null){
-            var bpm = data!!.extras.get("data") as Bitmap
+             bpm = data!!.extras.get("data") as Bitmap
             imageCamera.setImageBitmap(bpm)
         }
     }
 
+    //adding food item
     fun addFood(view: View) {
         println("Running add food")
         var dbManager = DbManager(this)
@@ -59,6 +65,8 @@ class AddFoodItem : AppCompatActivity() {
         var values = ContentValues()
         values.put("Description", addFoodDescription.text.toString())
         values.put("FoodName", newFoodName.text.toString())
+        values.put("Price", addFoodPrice.text.toString())
+        values.put("Calories", addFoodCalories.text.toString())
 
         Toast.makeText(this, "test", Toast.LENGTH_LONG).show()
 

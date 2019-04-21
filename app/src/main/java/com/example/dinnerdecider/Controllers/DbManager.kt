@@ -13,12 +13,18 @@ val dbTable = "Foods"
 val colID ="ID"
 val colName = "FoodName"
 val colDescription = "Description"
+val colPrice= "Price"
+val colCalories = "Calories"
+val colImage = "Image"
 val dbVersion =1
 
 val sqlCreateTable="CREATE TABLE IF NOT EXISTS "+ dbTable + " ("+
         colID + " INTEGER PRIMARY KEY , "+
         colName + " TEXT, "+
-        colDescription + " TEXT);"
+        colDescription + " TEXT, "+
+        colPrice + " TEXT, "+
+        colCalories + " TEXT "+
+        ");"
 
 var sqlDB:SQLiteDatabase?=null
 
@@ -69,13 +75,14 @@ class DbManager{
         return count
     }
 
+    //select function
     fun Query (projection:Array<String>, selection:String,   selectionArgs:Array<String>,sortOrNot:String): Cursor {
         val qb = SQLiteQueryBuilder()
         qb.tables= dbTable
         val cursor=qb.query(sqlDB, projection,selection,selectionArgs,null,null,sortOrNot)
         return cursor
     }
-
+    //update
     fun Update(values:ContentValues, selection: String, selectionArgs: Array<String>):Int{
         val count = sqlDB!!.update(dbTable,values,selection,selectionArgs)
         return count

@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         LoadQuery("%")
     }
+
+    //Loading data
     fun LoadQuery(title:String){
         println("Running LoadQuery - FoodListActivity")
 
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         var dbManager= DbManager(this)
 
         println("val create projection")
-        val projection = arrayOf("ID", "FoodName", "Description")
+        val projection = arrayOf("ID", "FoodName", "Description","Price","Calories")
         //select everything
 
         var selectionArgs= arrayOf(title)
@@ -69,8 +71,10 @@ class MainActivity : AppCompatActivity() {
                 val ID=cursor.getInt(cursor.getColumnIndex("ID"))
                 val FoodName=cursor.getString(cursor.getColumnIndex("FoodName"))
                 val Description=cursor.getString(cursor.getColumnIndex("Description"))
+                val Price=cursor.getString(cursor.getColumnIndex("Price"))
+                val Calories=cursor.getString(cursor.getColumnIndex("Calories"))
 
-                foodListPerisit.add(FoodItem(ID, FoodName, Description))
+                foodListPerisit.add(FoodItem(ID, FoodName, Description, Price, Calories))
 
             }while(cursor.moveToNext())
         }

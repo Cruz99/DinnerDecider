@@ -42,7 +42,7 @@
             android:fontFamily="@font/muli_bold" android:hint="add new food..."
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="25dp"
-            app:layout_constraintBottom_toTopOf="@+id/addFoodButton"/>
+            app:layout_constraintBottom_toTopOf="@+id/addFoodButton" android:visibility="invisible"/>
     <Button
             android:text="ADD FOOD"
             android:layout_width="231dp"
@@ -52,7 +52,7 @@
             android:fontFamily="@font/muli_bold" android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="80dp"
-            app:layout_constraintBottom_toTopOf="@+id/decideButton"/>
+            app:layout_constraintBottom_toTopOf="@+id/decideButton" android:visibility="invisible"/>
     <Button
             android:text="Foods"
             android:layout_width="138dp"
