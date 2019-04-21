@@ -1,4 +1,4 @@
-package com.example.dinnerdecider
+package com.example.dinnerdecider.Controllers
 
 import android.content.ContentValues
 import android.content.Context
@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteQueryBuilder
-import android.media.projection.MediaProjection
 import android.widget.Toast
 
 val dbName ="DinnerDeciderBla"
@@ -16,10 +15,10 @@ val colName = "FoodName"
 val colDescription = "Description"
 val dbVersion =1
 
-val sqlCreateTable="CREATE TABLE IF NOT EXISTS "+dbTable+ " ("+
+val sqlCreateTable="CREATE TABLE IF NOT EXISTS "+ dbTable + " ("+
         colID + " INTEGER PRIMARY KEY , "+
         colName + " TEXT, "+
-        colDescription+ " TEXT);"
+        colDescription + " TEXT);"
 
 var sqlDB:SQLiteDatabase?=null
 
@@ -28,13 +27,16 @@ class DbManager{
     constructor(context: Context){
         println("Runnign DBManager constructor")
         var db=DatabaseHelperFoods(context)
-        sqlDB=db.writableDatabase
+        sqlDB =db.writableDatabase
     }
 
 
     inner class DatabaseHelperFoods:SQLiteOpenHelper{
         var context:Context?=null
-        constructor(context: Context):super(context, dbName,null, dbVersion){
+        constructor(context: Context):super(context,
+            dbName,null,
+            dbVersion
+        ){
             println("Running inner DB Manager constructor")
             this.context=context
         }
@@ -57,7 +59,7 @@ class DbManager{
     fun Insert(value:ContentValues):Long{
         println("Running INsert in DB Manager")
 //        val sqlDB = this.writableDatabase
-        val ID =sqlDB!!.insert(dbTable, "", value)
+        val ID = sqlDB!!.insert(dbTable, "", value)
         return ID
     }
 

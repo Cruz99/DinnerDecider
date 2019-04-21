@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AddFoodItem">
+        tools:context=".Controllers.AddFoodItem">
 
     <EditText
             android:layout_width="wrap_content"
@@ -18,7 +18,9 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/addFoodDescription" app:layout_constraintVertical_bias="0.561"/>
+            app:layout_constraintBottom_toTopOf="@+id/addFoodDescription" app:layout_constraintVertical_bias="0.587"
+            android:maxLength="15"
+    />
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,10 +34,10 @@
     <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp" app:srcCompat="@drawable/dd_logo"
-            android:id="@+id/imageView2" android:layout_marginTop="144dp"
+            android:id="@+id/imageView2" android:layout_marginTop="96dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.498"/>
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.465"/>
     <Button
             android:text="Add"
             android:layout_width="wrap_content"
@@ -44,4 +46,22 @@
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.729" android:onClick="addFood"/>
+    <Button
+            android:text="Button"
+            android:layout_width="82dp"
+            android:layout_height="71dp"
+            android:id="@+id/buttonTakePic"
+            android:background="@drawable/baseline_photo_camera_black_18dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/addFoodDescription" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="74dp" app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/imageCamera"
+            app:layout_constraintEnd_toStartOf="@+id/buttonTakePic" android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/addFoodDescription"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

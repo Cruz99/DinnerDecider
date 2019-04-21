@@ -1,16 +1,13 @@
-package com.example.dinnerdecider
+package com.example.dinnerdecider.View
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseAdapter
-import kotlinx.android.synthetic.main.activity_food_list.*
+import com.example.dinnerdecider.Controllers.DbManager
+import com.example.dinnerdecider.Entities.FoodItem
+import com.example.dinnerdecider.R
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.ticket_new_food.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         println("Running LoadQuery - FoodListActivity")
 
         println("Creating DB MANAGER")
-        var dbManager=DbManager(this)
+        var dbManager= DbManager(this)
 
         println("val create projection")
         val projection = arrayOf("ID", "FoodName", "Description")

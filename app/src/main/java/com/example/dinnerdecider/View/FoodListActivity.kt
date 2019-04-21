@@ -1,4 +1,4 @@
-package com.example.dinnerdecider
+package com.example.dinnerdecider.View
 
 import android.app.SearchManager
 import android.content.Context
@@ -10,6 +10,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.dinnerdecider.Controllers.AddFoodItem
+import com.example.dinnerdecider.Controllers.DbManager
+import com.example.dinnerdecider.Entities.FoodItem
+import com.example.dinnerdecider.R
 import kotlinx.android.synthetic.main.activity_food_list.*
 import kotlinx.android.synthetic.main.ticket_new_food.view.*
 
@@ -34,7 +38,7 @@ class FoodListActivity : AppCompatActivity() {
         println("Running LoadQuery - FoodListActivity")
 
         println("Creating DB MANAGER")
-        var dbManager=DbManager(this)
+        var dbManager= DbManager(this)
 
         println("val create projection")
         val projection = arrayOf("ID", "FoodName", "Description")
@@ -120,10 +124,10 @@ class FoodListActivity : AppCompatActivity() {
 
             //adding nodes to view
             myView.foodItemName.text = item.foodName
-            myView.foodItemDescription.text = item.foodDescription
+            myView.foodItemDescription.text = item.foodDescription.toString().substring(0,35) +"..."
             //delete button
             myView.foodItemButtonDelete.setOnClickListener(View.OnClickListener {
-                var dbManager =DbManager(this.context!!)
+                var dbManager = DbManager(this.context!!)
                 var selectionArgs= arrayOf(item.foodId.toString()) //selection argument
                 dbManager.Delete("ID=?",selectionArgs)
                 LoadQuery("%")

@@ -1,14 +1,19 @@
-package com.example.dinnerdecider
+package com.example.dinnerdecider.Controllers
 
 import android.content.ContentValues
+import android.content.Intent
+import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import com.example.dinnerdecider.R
 import kotlinx.android.synthetic.main.activity_add_food_item.*
 import java.lang.Exception
 
 class AddFoodItem : AppCompatActivity() {
+    val IMAGE_CAPTURE_CODE: Int = 1001
     var id = 0 //to check update statement id value
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +29,27 @@ class AddFoodItem : AppCompatActivity() {
                 addFoodDescription.setText(bundle.getString("foodDesc").toString())
             }
         }catch (ex:Exception){
-
         }
 
+        //camera
+        var t = 123
+        buttonTakePic.setOnClickListener{
+            var i =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
+            i.putExtra(MediaStore.EXTRA_OUTPUT, IMAGE_CAPTURE_CODE)
+            startActivityForResult(i, IMAGE_CAPTURE_CODE)
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        println("Running  - OnActivityResult")
+        println("Running - testing for null")
+        if(requestCode!=null){
+            var bpm = data!!.extras.get("data") as Bitmap
+            imageCamera.setImageBitmap(bpm)
+        }
     }
 
     fun addFood(view: View) {

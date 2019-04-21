@@ -1,4 +1,4 @@
-package com.example.dinnerdecider
+package com.example.dinnerdecider.Entities
 
 import android.widget.BaseAdapter
 
@@ -13,6 +13,7 @@ class FoodItem {
         this.foodId = foodId
         this.foodName = FoodName
         this.foodDescription = FoodDescription
+
     }
 
 

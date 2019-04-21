@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:background="@color/colorAccent"
 
-        tools:context=".FoodItem" android:orientation="vertical" android:layout_height="match_parent">
+        tools:context=".Entities.FoodItem" android:orientation="vertical" android:layout_height="match_parent">
 
     <LinearLayout
             android:layout_margin="3pt"
@@ -20,7 +20,10 @@
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent" android:textSize="30sp" android:fontFamily="@font/muli_bold"/>
+                android:layout_width="match_parent" android:textSize="30sp" android:fontFamily="@font/muli_bold"
+                android:inputType="text"
+                android:maxLength="15"
+            />
         <TextView
                 android:text="food description"
                 android:layout_height="wrap_content" android:id="@+id/foodItemDescription"
@@ -29,7 +32,10 @@
                 android:layout_marginStart="8dp" android:layout_width="match_parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/foodItemName"
-                android:fontFamily="@font/muli_bold" android:textSize="18sp"/>
+                android:fontFamily="@font/muli_bold" android:textSize="18sp"
+                android:singleLine="true"
+
+        />
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
