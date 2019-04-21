@@ -19,14 +19,46 @@ class FoodListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_list)
+        //Load from database
+        LoadQuery("%")
 
-        foodListPerisit.add(FoodItem(1, "Kotlet", "Polish Speciality"))
-        foodListPerisit.add(FoodItem(2, "Pizza", "Italian Speciality"))
-        foodListPerisit.add(FoodItem(3, "Goulash", "Hungarian Speciality"))
+    }
 
-        var foodListAdapter = MyFoodAdapter(foodListPerisit)
+    //method to refresh list on resume
+    override fun onResume() {
+        super.onResume()
+        LoadQuery("%")
+    }
+    //to load from database
+    fun LoadQuery(title:String){
+        println("Running LoadQuery - FoodListActivity")
+
+        println("Creating DB MANAGER")
+        var dbManager=DbManager(this)
+
+        println("val create projection")
+        val projection = arrayOf("ID", "FoodName", "Description")
+        //select everything
+
+        var selectionArgs= arrayOf(title)
+        println("Running create cursor")
+        val cursor=dbManager.Query(projection,"FoodName LIKE ?",selectionArgs, "FoodName")
+        // need all columns
+        foodListPerisit.clear()
+        //cleaning array
+        if(cursor.moveToFirst()){
+            do{
+                val ID=cursor.getInt(cursor.getColumnIndex("ID"))
+                val FoodName=cursor.getString(cursor.getColumnIndex("FoodName"))
+                val Description=cursor.getString(cursor.getColumnIndex("Description"))
+
+                foodListPerisit.add(FoodItem(ID, FoodName, Description))
+
+            }while(cursor.moveToNext())
+        }
+        //display data
+        var foodListAdapter = MyFoodAdapter(this ,foodListPerisit)
         foodListView.adapter = foodListAdapter
-
     }
 
     // initialize menu items
@@ -40,7 +72,7 @@ class FoodListActivity : AppCompatActivity() {
         sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(applicationContext, query, Toast.LENGTH_LONG).show()
-                //TODO: search database
+                LoadQuery("%"+ query+"%")
                 return false
             }
 
@@ -68,21 +100,39 @@ class FoodListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
+    //Adpter for myFood page
     inner class MyFoodAdapter : BaseAdapter {
 
+        //list of foods
         var foodListPerisitAdapter = ArrayList<FoodItem>()
-
-        constructor(foodListPerisit: ArrayList<FoodItem>) : super() {
+        var context: Context?=null
+        //constructor accepting ArrayList and context
+        constructor(context: Context, foodListPerisit: ArrayList<FoodItem>) : super() {
             this.foodListPerisitAdapter = foodListPerisit
+            this.context=context
         }
 
+        //getting view - function where we update buttons - delete or edit
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var myView = layoutInflater.inflate(R.layout.ticket_new_food, null)
             var item = foodListPerisitAdapter[position]
 
+
+            //adding nodes to view
             myView.foodItemName.text = item.foodName
             myView.foodItemDescription.text = item.foodDescription
+            //delete button
+            myView.foodItemButtonDelete.setOnClickListener(View.OnClickListener {
+                var dbManager =DbManager(this.context!!)
+                var selectionArgs= arrayOf(item.foodId.toString()) //selection argument
+                dbManager.Delete("ID=?",selectionArgs)
+                LoadQuery("%")
+            })
+            //edit button
+            myView.foodItemButtonEdit.setOnClickListener(View.OnClickListener {
+                GoToUpdate(item)
+
+            })
 
             return myView
 
@@ -99,6 +149,14 @@ class FoodListActivity : AppCompatActivity() {
         override fun getCount(): Int {
             return foodListPerisitAdapter.size
         }
+    }
+    //to make intent work
+    fun GoToUpdate(item: FoodItem){
+        var intent  = Intent(this, AddFoodItem::class.java) // create intent
+        intent.putExtra("ID", item.foodId)
+        intent.putExtra("foodName", item.foodName)
+        intent.putExtra("foodDesc", item.foodDescription)
+        startActivity(intent)  //start activity
     }
 
 }
