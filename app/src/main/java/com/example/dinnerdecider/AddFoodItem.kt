@@ -14,14 +14,14 @@ class AddFoodItem : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_food_item)
 
-        var bundle: Bundle = intent.extras
 
         //default value for id = 0
-        id = bundle.getInt("ID", 0)
         try {
+            var bundle: Bundle = intent.extras
+            id = bundle.getInt("ID", 0)
             if (id != 0) { //check
-                addFoodDescription.setText(bundle.getString("foodName").toString())
-                newFoodName.setText(bundle.getString("foodDesc").toString())
+                newFoodName.setText(bundle.getString("foodName").toString())
+                addFoodDescription.setText(bundle.getString("foodDesc").toString())
             }
         }catch (ex:Exception){
 
@@ -40,20 +40,22 @@ class AddFoodItem : AppCompatActivity() {
 
         Toast.makeText(this, "test", Toast.LENGTH_LONG).show()
 
-        if (id == 0) {
+
+        ///checking if update or add
+        if (id ==0) { //for adding new
             val ID = dbManager.Insert(values)
             if (ID > 0) {
                 Toast.makeText(this, " food is added ", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, " cannot add food ", Toast.LENGTH_LONG).show()
             }
-        } else {
+        } else {  /// for updating
             var selectionArgs = arrayOf(id.toString())
             val ID = dbManager.Update(values, "ID=?", selectionArgs)
             if (ID > 0) {
-                Toast.makeText(this, " food is added ", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, " food is updated ", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, " cannot add food ", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, " cannot update food ", Toast.LENGTH_LONG).show()
             }
         }
     }

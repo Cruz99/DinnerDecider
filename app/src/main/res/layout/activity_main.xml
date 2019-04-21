@@ -11,7 +11,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chineese !"
+            android:text="What ya'gonna eat?"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:id="@+id/selectedFoodText" android:fontFamily="@font/muli_bold" android:textSize="30sp"
